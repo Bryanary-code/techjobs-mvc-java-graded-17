@@ -8,37 +8,54 @@
 
 <div class="container body-content">
 
-  <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
+    <h1>Search Results</h1>
 
-  <form th:action="@{/search/results}" method = "post">
-    <h2>Search by:</h2>
+    <!-- Display search form -->
+    <form th:action="@{/search/results}" method="post">
+        <div class="form-group">
+            <label for="choices">Search Type:</label>
+            <select id="choices" name="choices">
+                <option th:each="entry : ${columns}" th:value="${entry.key}" th:text="${entry.value}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="searchTerm">Search Term:</label>
+            <input type="text" id="searchTerm" name="searchTerm" />
+        </div>
+        <button type="submit">Search</button>
+    </form>
 
-    <p>
-            <span th:each="column : ${columns}">
-                <input
-                        type="radio"
-                        name="searchType"
-                        th:id="${column.key}"
-                        th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
-                <label th:for="${column.key}" th:text="${column.value}"></label>
-            </span>
+    <!-- Display search results in tables -->
+    <table th:if="${jobs}" class="job-listing">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Employer</th>
+            <th>Location</th>
+            <th>Position Type</th>
+            <th>Skill</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${jobs}">
+            <td th:text="${job.id}"></td>
+            <td th:text="${job.name}"></td>
+            <td th:text="${job.employer}"></td>
+            <td th:text="${job.location}"></td>
+            <td th:text="${job.positionType}"></td>
+            <td th:text="${job.coreCompetency}"></td>
+        </tr>
+        </tbody>
+    </table>
 
-    </p>
-
-    <p>
-      <label for="searchTerm">Keyword:</label>
-      <input type="text" name="searchTerm" id="searchTerm" />
-    </p>
-
-    <input type="submit" value="Search" />
-  </form>
-
-  <hr />
-
-  <!-- TODO #4 - Loop over the search results to display all job fields. -->
+    <!-- Display a message if no results are found -->
+    <div th:if="${jobs == null or jobs.size() == 0}">
+        <p>No results found.</p>
+    </div>
 
 </div>
 
 </body>
 </html>
+
