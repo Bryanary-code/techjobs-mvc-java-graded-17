@@ -8,25 +8,36 @@
 
 <div class="container body-content">
 
-    <h1>Search Results</h1>
+    <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-    <!-- Display search form -->
-    <form th:action="@{/search/results}" method="post">
-        <div class="form-group">
-            <label for="choices">Search Type:</label>
-            <select id="choices" name="choices">
-                <option th:each="entry : ${columns}" th:value="${entry.key}" th:text="${entry.value}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="searchTerm">Search Term:</label>
-            <input type="text" id="searchTerm" name="searchTerm" />
-        </div>
-        <button type="submit">Search</button>
+    <form th:action="@{/search/results}" method = "post">
+        <h2>Search by:</h2>
+
+        <p>
+            <span th:each="column : ${columns}">
+                <input
+                        type="radio"
+                        name="searchType"
+                        th:id="${column.key}"
+                        th:value="${column.key}"
+                        th:checked="${column.key == 'all'}"/>
+                <label th:for="${column.key}" th:text="${column.value}"></label>
+            </span>
+
+        </p>
+
+        <p>
+            <label for="searchTerm">Keyword:</label>
+            <input type="text" name="searchTerm" id="searchTerm" />
+        </p>
+
+        <input type="submit" value="Search" />
     </form>
 
+    <hr />
+
     <!-- Display search results in tables -->
-    <table th:if="${jobs}" class="job-listing">
+    <table th:if="${jobs?.size() > 0}" class="job-listing">
         <thead>
         <tr>
             <th>ID</th>
