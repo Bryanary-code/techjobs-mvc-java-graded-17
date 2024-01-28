@@ -37,36 +37,36 @@
     <hr />
 
     <!-- Display search results in tables -->
-    <table th:if="${jobs?.size() > 0}" class="job-listing">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Employer</th>
-            <th>Location</th>
-            <th>Position Type</th>
-            <th>Skill</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="job : ${jobs}">
-            <td th:text="${job.id}"></td>
-            <td th:text="${job.name}"></td>
-            <td th:text="${job.employer}"></td>
-            <td th:text="${job.location}"></td>
-            <td th:text="${job.positionType}"></td>
-            <td th:text="${job.coreCompetency}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <!-- Display a message if no results are found -->
-    <div th:if="${jobs == null or jobs.size() == 0}">
-        <p>No results found.</p>
+    <div th:if="${jobs?.size() > 0}">
+        <th:block th:each="job : ${jobs}">
+            <table class="job-listing">
+                <tr>
+                    <td>ID</td>
+                    <td th:text="${job.id}"></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td th:text="${job.name}"></td>
+                </tr>
+                <tr>
+                    <td>Employer</td>
+                    <td th:text="${job.employer}"></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td th:text="${job.location}"></td>
+                </tr>
+                <tr>
+                    <td>Position Type</td>
+                    <td th:text="${job.positionType}"></td>
+                </tr>
+                <tr>
+                    <td>Skill</td>
+                    <td th:text="${job.coreCompetency}"></td>
+                </tr>
+            </table>
+        </th:block>
     </div>
-
 </div>
-
 </body>
 </html>
-
