@@ -37,7 +37,7 @@
     <hr />
 
     <!-- Display search results in tables -->
-    <div th:if="${jobs?.size() > 0}">
+    <div th:if="${jobs}">
         <th:block th:each="job : ${jobs}">
             <table class="job-listing">
                 <tr>
